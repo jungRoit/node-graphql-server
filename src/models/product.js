@@ -6,6 +6,6 @@ const schema = new Schema({
   imageUrl: String
 });
 
-const Product = model('product',schema);
+const Product = model('products',schema);
 
 module.exports = Product;

@@ -2,11 +2,12 @@ const Product = require('../../models/product');
 
 const resolvers = {
   Query: {
-    Products: Product.find({})
+    Products: () => Product.find({})
   },
   Mutation: {
-    addProduct: (parent,productObj) => {
-      const product = new Product(productObj);
+    addProduct: (parent,object) => {
+      console.log('add prod', object);
+      const product = new Product(object);
 
       return product.save();
     }

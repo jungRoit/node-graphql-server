@@ -11,7 +11,7 @@ const productSchema = gql`
     Products: [Product]
   },
   type Mutation {
-    addProduct(name: String!, price: String!, imageUrl: String!): Product,
+    addProduct(name: String!, price: Float!, imageUrl: String!): Product,
   }`;
 
   module.exports = productSchema;
