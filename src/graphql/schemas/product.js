@@ -8,10 +8,13 @@ const productSchema = gql`
     imageUrl: String
   },
   type Query {
-    Products: [Product]
+    Products: [Product],
+    ProductNotFoundError: String
   },
   type Mutation {
     addProduct(name: String!, price: Float!, imageUrl: String!): Product,
+    updateProduct(id:ID!, name: String, price: Float, imageUrl: String): Product,
+    deleteProduct(id:ID!): Boolean
   }`;
 
   module.exports = productSchema;
