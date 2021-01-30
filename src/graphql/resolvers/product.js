@@ -5,22 +5,38 @@ const resolvers = {
     Products: () => Product.find({})
   },
   Mutation: {
-    addProduct: (parent,object) => {
-      console.log('add prod', object);
-      const product = new Product(object);
+    addProduct: (parent,body) => {
+      try {
+        const product = new Product(body);
 
-      return product.save();
+        return product.save();
+      } catch (error) {
+        throw new Error(`Error creating Product`)
+      }
     },
-    updateProduct: async (parent, object) => {
-      const product = await Product.findOne({_id:object.id});
-      console.log('prod', product);
-      if(!product) {
-        throw new ProductNotFoundError(`Product with ID ${object.id} not found.`)
+    updateProduct: async (parent, body) => {
+      try {
+        const product = await Product.findOne({_id:body.id});
+        console.log('prod', product);
+        if(!product) {
+          throw new Error(`Product with ID ${body.id} not found.`)
+        }
+
+        await Product.updateOne({_id:body.id},body);
+        return await Product.findOne({_id:body.id});
+      } catch (error) {
+        throw new Error(`Error updating Product.`)
+
       }
 
-      await Product.updateOne({_id:object.id},object);
-      return await Product.findOne({_id:object.id});
-
+    },
+    deleteProduct: async (parent,body) => {
+      try {
+        const response =await  Product.deleteOne({_id:body.id});
+        return 'success';
+      } catch (error) {
+        throw new Error(`Error deleting Product.`)
+      }
     }
   }
 };
