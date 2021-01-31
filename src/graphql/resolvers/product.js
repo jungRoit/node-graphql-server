@@ -1,43 +1,12 @@
-const Product = require('../../models/product');
-
+const productService = require('../../services/product');
 const resolvers = {
   Query: {
-    Products: () => Product.find({})
+    Products: productService.getAllProducts
   },
   Mutation: {
-    addProduct: (parent,body) => {
-      try {
-        const product = new Product(body);
-
-        return product.save();
-      } catch (error) {
-        throw new Error(`Error creating Product`)
-      }
-    },
-    updateProduct: async (parent, body) => {
-      try {
-        const product = await Product.findOne({_id:body.id});
-        console.log('prod', product);
-        if(!product) {
-          throw new Error(`Product with ID ${body.id} not found.`)
-        }
-
-        await Product.updateOne({_id:body.id},body);
-        return await Product.findOne({_id:body.id});
-      } catch (error) {
-        throw new Error(`Error updating Product.`)
-
-      }
-
-    },
-    deleteProduct: async (parent,body) => {
-      try {
-        const response =await  Product.deleteOne({_id:body.id});
-        return 'success';
-      } catch (error) {
-        throw new Error(`Error deleting Product.`)
-      }
-    }
+    addProduct:productService.addProduct,
+    updateProduct: productService.updateProduct, 
+    deleteProduct: productService.deleteProduct
   }
 };
 
