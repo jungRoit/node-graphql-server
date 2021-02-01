@@ -7,8 +7,14 @@ const productSchema = gql`
     price: Float,
     imageUrl: String
   },
+
+  type ProductResponse {
+    products:[Product],
+    count:Int
+  }
+
   type Query {
-    Products(offset:Int, sortBy: String, order: String): [Product]
+    Products(offset:Int, sortBy: String, order: String): ProductResponse
   },
   type Mutation {
     addProduct(name: String!, price: Float!, imageUrl: String!): Product,
