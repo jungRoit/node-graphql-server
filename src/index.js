@@ -16,6 +16,6 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 server.applyMiddleware({app});
 
-app.listen({port:'9000'},()=> {
+app.listen({port:process.env.PORT || 9000},()=> {
   console.log('App running in port 9000');
 })
